@@ -11,6 +11,7 @@ import random
 import string
 
 WORDLIST_FILENAME = "words.txt"
+wordlist = []
 
 def load_words():
     """
@@ -19,14 +20,15 @@ def load_words():
     Depending on the size of the word list, this function may
     take a while to finish.
     """
-    print "Loading word list from file..."
+    print ("Loading word list from file...")
     # inFile: file
-    inFile = open(WORDLIST_FILENAME, 'r', 0)
+    inFile = open(WORDLIST_FILENAME, 'r')
     # line: string
-    line = inFile.readline()
+    for w in inFile:
+        word = (w.rstrip())
+        wordlist.append(word)
     # wordlist: list of strings
-    wordlist = string.split(line)
-    print "  ", len(wordlist), "words loaded."
+    print ("  ", len(wordlist), "words loaded.")
     return wordlist
 
 def choose_word(wordlist):
@@ -53,7 +55,7 @@ def hide_word(randword, board, guesses):
     else:
       board.append(letter)
   board = ' '.join(board)
-  print board
+  print (board)
   return 
   
 def swap_letters(randword, guesses, board):
@@ -64,17 +66,17 @@ def swap_letters(randword, guesses, board):
   
   
 def get_guess(guesses):
-  guess = str(raw_input('Which letter do you guess? --> '))
+  guess = str(input('Which letter do you guess? --> '))
   if len(guess) != 1:
-    print 'You entered more than one character. Try agian.'
+    print ('You entered more than one character. Try agian.')
     get_guess(guesses)
   elif guess in guesses:
-    print 'You already guessed that letter. Try agian.'
+    print ('You already guessed that letter. Try agian.')
     get_guess(guesses)
   else:  
     guesses.append(guess)
     guesses = ' '.join(guesses)
-    print 'Your guesses are: %s ' % (guesses)
+    print ('Your guesses are: %s ' % (guesses))
     return guess
 
   
@@ -99,7 +101,7 @@ def main():
 
   
   while True:
-    print 'You have %d turns left.' % (max_tries)
+    print ('You have %d turns left.' % (max_tries))
     board = []
     hide_word(randword, board, guesses)
     
@@ -112,13 +114,13 @@ def main():
 
     
     if win == True:
-      print 'You win!'
+      print ('You win!')
       break
     if  max_tries == 0:
-      print 'You lost'
+      print ('You lost')
       break 
-  print 'The word was: ' + randword
-  print 'Game Over!'
+  print ('The word was: ' + randword)
+  print ('Game Over!')
 
   
 
